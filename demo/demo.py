@@ -334,8 +334,19 @@ def main():
                 ]
             )
 
-            # Create a more interactive map using Plotly
-            fig = px.scatter_mapbox(
+            # # Create a more interactive map using Plotly
+            # fig = px.scatter_mapbox(
+            #     df,
+            #     lat="lat",
+            #     lon="lon",
+            #     zoom=2,
+            #     opacity=0.6,
+            #     color="type",
+            #     color_discrete_map={"Sample": "blue", "Best Guess": "red"},
+            #     mapbox_style="carto-positron",
+            # )
+
+            fig = px.scatter_map(
                 df,
                 lat="lat",
                 lon="lon",
@@ -343,9 +354,8 @@ def main():
                 opacity=0.6,
                 color="type",
                 color_discrete_map={"Sample": "blue", "Best Guess": "red"},
-                mapbox_style="carto-positron",
+                map_style="carto-positron",
             )
-
             fig.update_traces(selector=dict(name="Best Guess"), marker_size=15)
 
             fig.update_layout(
