@@ -10,8 +10,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN python -m pip install --upgrade pip \
-    && python -m pip install ".[api]" \
+RUN python -m pip install ".[api]" \
     && useradd --create-home --uid 10001 plonk \
     && mkdir -p /home/plonk/.cache/huggingface /home/plonk/.cache/torch \
     && chown -R plonk:plonk /app /home/plonk

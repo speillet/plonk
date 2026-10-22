@@ -10,5 +10,17 @@ if ! command -v docker >/dev/null 2>&1; then
 fi
 
 echo "Building Docker image: ${IMAGE_NAME}"
-docker build --tag "${IMAGE_NAME}" "${SCRIPT_DIR}"
+docker_args=(build --tag "${IMAGE_NAME}")
+
+# Forward the host proxy to BuildKit without storing it in the image.
+for proxy_variable in \
+    http_proxy https_proxy no_proxy \
+    HTTP_PROXY HTTPS_PROXY NO_PROXY; do
+    if [[ -n "${!proxy_variable:-}" ]]; then
+        docker_args+=(--build-arg "${proxy_variable}=${!proxy_variable}")
+    fi
+done
+
+docker_args+=("${SCRIPT_DIR}")
+docker "${docker_args[@]}"
 echo "Image built successfully: ${IMAGE_NAME}"

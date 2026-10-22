@@ -30,6 +30,15 @@ if [[ "${USE_GPU}" == "1" ]]; then
     docker_args+=(--gpus all)
 fi
 
+# The API needs network access when Hugging Face and Torch models are downloaded.
+for proxy_variable in \
+    http_proxy https_proxy no_proxy \
+    HTTP_PROXY HTTPS_PROXY NO_PROXY; do
+    if [[ -n "${!proxy_variable:-}" ]]; then
+        docker_args+=(--env "${proxy_variable}=${!proxy_variable}")
+    fi
+done
+
 docker_args+=("${IMAGE_NAME}")
 
 echo "Starting ${IMAGE_NAME} on http://localhost:${API_PORT}"
