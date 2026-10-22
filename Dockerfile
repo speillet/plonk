@@ -8,16 +8,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# build-essential is only needed while installing packages with native extensions.
-RUN apt-get update \
-    && apt-get install --no-install-recommends --yes build-essential ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY . .
 
 RUN python -m pip install --upgrade pip \
     && python -m pip install ".[api]" \
-    && apt-get purge --auto-remove --yes build-essential \
     && useradd --create-home --uid 10001 plonk \
     && mkdir -p /home/plonk/.cache/huggingface /home/plonk/.cache/torch \
     && chown -R plonk:plonk /app /home/plonk
