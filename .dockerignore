@@ -1,0 +1,17 @@
+.git
+.gitignore
+.media
+.pytest_cache
+.ruff_cache
+__pycache__
+*.py[cod]
+*.egg-info
+*.ipynb
+*.log
+.env
+.venv
+venv
+build
+dist
+checkpoints
+docs
