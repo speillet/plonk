@@ -27,6 +27,7 @@ setup(
     ],
     include_package_data=True,
     extras_require={
+        "api": ["fastapi", "uvicorn[standard]", "python-multipart"],
         "train": [
             "wandb",
             "hydra-core",
